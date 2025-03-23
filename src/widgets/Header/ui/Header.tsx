@@ -18,7 +18,7 @@ interface Props {
 
 export const Header: FC<Props> = ({ className }) => {
   return (
-    <div className={cn("border-b py-2", className)}>
+    <div className={cn("border-b py-2 sticky top-0 bg-background", className)}>
       <Container className="flex flex-col gap-2">
         <div className="flex items-center justify-between gap-2">
           <div className="text-2xl font-bold">LibSpace</div>

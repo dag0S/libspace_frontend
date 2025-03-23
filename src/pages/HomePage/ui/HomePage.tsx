@@ -1,5 +1,5 @@
-import { Button } from "@/src/shared/shadcn/button";
 import { Container } from "@/src/shared/ui";
+import { BookList } from "@/src/widgets/BookList";
 
 import { FC } from "react";
 
@@ -7,7 +7,7 @@ const Page: FC = () => {
   return (
     <div>
       <Container>
-        <Button>Кнопка</Button>
+        <BookList />
       </Container>
     </div>
   );

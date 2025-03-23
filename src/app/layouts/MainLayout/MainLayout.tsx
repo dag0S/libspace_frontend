@@ -15,7 +15,7 @@ export default function MainLayout({
 }>) {
   return (
     <>
-      <Header />
+      <Header className="mb-2" />
       <main>{children}</main>
       <Menu />
     </>
