@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { FC } from "react";
 
-import { Button, Input, Label, Separator } from "@/src/shared/shadcn";
+import { Separator } from "@/src/shared/shadcn";
 import { Container } from "@/src/shared/ui";
+import { LoginForm } from "@/src/widgets/LoginForm";
 
 const LoginPage: FC = () => {
   return (
@@ -13,24 +14,10 @@ const LoginPage: FC = () => {
         </Link>
         <Separator />
         <h3 className="text-2xl">Вход</h3>
-        <div className="w-full">
-          <Label htmlFor="email" className="mb-2">
-            Email
-          </Label>
-          <Input type="email" id="email" placeholder="Email" />
-        </div>
-        <div className="w-full">
-          <Label htmlFor="password" className="mb-2">
-            Пароль
-          </Label>
-          <Input type="password" id="password" placeholder="Пароль" />
-        </div>
-        <Button className="w-full" size="lg">
-          Войти
-        </Button>
+        <LoginForm />
         <div>
           Нет аккаунта?{" "}
-          <Link href="/register" className="font-medium">
+          <Link href="/register" className="font-medium text-primary">
             Регистрация
           </Link>
         </div>
