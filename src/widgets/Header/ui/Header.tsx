@@ -1,7 +1,6 @@
 import { FC } from "react";
 import {
   BadgeAlert,
-  EllipsisVertical,
   Grid3x3,
   Heart,
   ListFilter,
@@ -11,6 +10,7 @@ import {
 import { cn } from "@/src/shared/lib";
 import { Container } from "@/src/shared/ui";
 import { Button } from "@/src/shared/shadcn";
+import { SwitchTheme } from "@/src/features/SwitchTheme";
 
 interface Props {
   className?: string;
@@ -29,9 +29,7 @@ export const Header: FC<Props> = ({ className }) => {
             <Button variant="ghost" size="icon">
               <Grid3x3 />
             </Button>
-            <Button variant="ghost" size="icon">
-              <EllipsisVertical />
-            </Button>
+            <SwitchTheme />
           </div>
         </div>
 

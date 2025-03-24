@@ -39,7 +39,7 @@ export const Menu: FC<Props> = ({ className }) => {
         }
       )}
     >
-      <div className={cn("flex gap-1 p-2 bg-blue-100 rounded-2xl")}>
+      <div className={cn("flex gap-1 p-2 bg-blue-100 dark:bg-blue-700 rounded-2xl")}>
         <Link href="/">
           <Button
             variant="ghost"

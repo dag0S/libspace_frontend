@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Roboto, Roboto_Mono } from "next/font/google";
 
+import { Providers } from "../../providers/Providers";
+
 import "../../styles/globals.css";
 
 const roboto = Roboto({
@@ -26,11 +28,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru">
+    <html lang="ru" suppressHydrationWarning>
       <body
         className={`${roboto.variable} ${robotoMono.variable} antialiased relative`}
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
