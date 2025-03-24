@@ -1,7 +1,6 @@
 "use client";
 
-import { FC } from "react";
-import { z } from "zod";
+import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -16,20 +15,19 @@ import {
   FormMessage,
   Input,
 } from "@/src/shared/shadcn";
+import { Login, loginFormSchema, useLoginMutation } from "@/src/features/Auth";
+import { useRouter } from "next/navigation";
+import { isErrorWithMessage } from "@/src/shared/utils";
 
 interface Props {
   className?: string;
 }
 
-const loginFormSchema = z.object({
-  email: z.string().email({
-    message: "Введите корректный email-адрес",
-  }),
-  password: z.string(),
-});
-
 export const LoginForm: FC<Props> = ({ className }) => {
-  const form = useForm<z.infer<typeof loginFormSchema>>({
+  const [userLogin, { isLoading }] = useLoginMutation();
+  const [error, setError] = useState("");
+  const router = useRouter();
+  const form = useForm<Login>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
       email: "",
@@ -37,8 +35,23 @@ export const LoginForm: FC<Props> = ({ className }) => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof loginFormSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: Login) => {
+    try {
+      setError("");
+
+      if (!isLoading) {
+        await userLogin(values).unwrap();
+        router.push("/");
+      }
+    } catch (err) {
+      const mayBeError = isErrorWithMessage(err);
+
+      if (mayBeError) {
+        setError(err.data.message);
+      } else {
+        setError("Неизвестная ошибка");
+      }
+    }
   };
 
   return (
@@ -67,15 +80,16 @@ export const LoginForm: FC<Props> = ({ className }) => {
             <FormItem className="w-full">
               <FormLabel className="mb-2">Пароль</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="пароль" {...field} />
+                <Input type="password" placeholder="Пароль" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full" size="lg">
+        <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
           Войти
         </Button>
+        {error && <div className="text-destructive">{error}</div>}
       </form>
     </Form>
   );

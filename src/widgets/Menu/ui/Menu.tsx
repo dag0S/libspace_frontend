@@ -1,11 +1,12 @@
 "use client";
 
 import { FC, useEffect, useState } from "react";
-import { LibraryBig, LogIn, Ticket } from "lucide-react";
+import { LibraryBig, LogIn, Ticket, User } from "lucide-react";
 import Link from "next/link";
 
 import { cn } from "@/src/shared/lib";
 import { Button } from "@/src/shared/shadcn";
+import { useAuth } from "@/src/shared/hooks";
 
 interface Props {
   className?: string;
@@ -14,6 +15,7 @@ interface Props {
 export const Menu: FC<Props> = ({ className }) => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const { user, isAuthenticated, isLoading } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,7 +41,11 @@ export const Menu: FC<Props> = ({ className }) => {
         }
       )}
     >
-      <div className={cn("flex gap-1 p-2 bg-blue-100 dark:bg-blue-700 rounded-2xl")}>
+      <div
+        className={cn(
+          "flex gap-1 p-2 bg-blue-100 dark:bg-blue-700 rounded-2xl"
+        )}
+      >
         <Link href="/">
           <Button
             variant="ghost"
@@ -58,15 +64,34 @@ export const Menu: FC<Props> = ({ className }) => {
             <div className="font-normal">Аренды</div>
           </Button>
         </Link>
-        <Link href="/login">
+        {isLoading ? (
           <Button
             variant="ghost"
             className="flex-col gap-1 h-full w-[68px] has-[>svg]:p-1"
           >
-            <LogIn className="size-6" />
-            <div className="font-normal">Вход</div>
+            загрузка
           </Button>
-        </Link>
+        ) : isAuthenticated ? (
+          <Link href="/prifile">
+            <Button
+              variant="ghost"
+              className="flex-col gap-1 h-full w-[68px] has-[>svg]:p-1"
+            >
+              <User className="size-6" />
+              <div className="font-normal">{user?.firstName}</div>
+            </Button>
+          </Link>
+        ) : (
+          <Link href="/login">
+            <Button
+              variant="ghost"
+              className="flex-col gap-1 h-full w-[68px] has-[>svg]:p-1"
+            >
+              <LogIn className="size-6" />
+              <div className="font-normal">Вход</div>
+            </Button>
+          </Link>
+        )}
       </div>
     </div>
   );
