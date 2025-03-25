@@ -1,13 +1,15 @@
+import { FC, Suspense } from "react";
+
 import { Container } from "@/src/shared/ui";
-import { BookList } from "@/src/widgets/BookList";
+import { BookList, BookListSkeleton } from "@/src/widgets/BookList";
 
-import { FC } from "react";
-
-const Page: FC = () => {
+const Page: FC = async () => {
   return (
     <div>
       <Container>
-        <BookList />
+        <Suspense fallback={<BookListSkeleton />}>
+          <BookList />
+        </Suspense>
       </Container>
     </div>
   );

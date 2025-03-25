@@ -16,7 +16,7 @@ export default function MainLayout({
   return (
     <>
       <Header className="mb-2" />
-      <main>{children}</main>
+      <main className="flex-1 flex justify-center items-center">{children}</main>
       <Menu />
     </>
   );

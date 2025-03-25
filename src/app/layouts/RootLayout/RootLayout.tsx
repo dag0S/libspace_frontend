@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="ru" suppressHydrationWarning>
       <body
-        className={`${roboto.variable} ${robotoMono.variable} antialiased relative`}
+        className={`${roboto.variable} ${robotoMono.variable} antialiased relative min-h-screen flex flex-col`}
       >
         <Providers>{children}</Providers>
       </body>

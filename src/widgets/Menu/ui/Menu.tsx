@@ -1,11 +1,17 @@
 "use client";
 
 import { FC, useEffect, useState } from "react";
-import { LibraryBig, LogIn, Ticket, User } from "lucide-react";
+import { LibraryBig, LogIn, Ticket } from "lucide-react";
 import Link from "next/link";
 
 import { cn } from "@/src/shared/lib";
-import { Button } from "@/src/shared/shadcn";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Button,
+  Spinner,
+} from "@/src/shared/shadcn";
 import { useAuth } from "@/src/shared/hooks";
 
 interface Props {
@@ -69,7 +75,7 @@ export const Menu: FC<Props> = ({ className }) => {
             variant="ghost"
             className="flex-col gap-1 h-full w-[68px] has-[>svg]:p-1"
           >
-            загрузка
+            <Spinner className="text-foreground" />
           </Button>
         ) : isAuthenticated ? (
           <Link href="/prifile">
@@ -77,8 +83,13 @@ export const Menu: FC<Props> = ({ className }) => {
               variant="ghost"
               className="flex-col gap-1 h-full w-[68px] has-[>svg]:p-1"
             >
-              <User className="size-6" />
-              <div className="font-normal">{user?.firstName}</div>
+              <Avatar className="size-6">
+                <AvatarImage
+                  src={user?.avatarURL ? user.avatarURL : undefined}
+                />
+                <AvatarFallback>{`${user?.firstName[0]}${user?.lastName[0]}`}</AvatarFallback>
+              </Avatar>
+              <div className="font-normal">Профиль</div>
             </Button>
           </Link>
         ) : (
