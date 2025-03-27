@@ -2,17 +2,17 @@
 
 import { FC, useEffect, useState } from "react";
 import { LibraryBig, LogIn, Ticket } from "lucide-react";
-import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { cn } from "@/src/shared/lib";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-  Button,
   Spinner,
 } from "@/src/shared/shadcn";
 import { useAuth } from "@/src/shared/hooks";
+import { MenuLink } from "./MenuLink";
 
 interface Props {
   className?: string;
@@ -22,6 +22,7 @@ export const Menu: FC<Props> = ({ className }) => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const { user, isAuthenticated, isLoading } = useAuth();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,7 +39,7 @@ export const Menu: FC<Props> = ({ className }) => {
   }, [lastScrollY]);
 
   return (
-    <div
+    <nav
       className={cn(
         "bg-gradient-to-t from-background fixed bottom-0 h-22 w-full flex items-center justify-center transition-transform duration-300 ease-in-out",
         className,
@@ -52,58 +53,33 @@ export const Menu: FC<Props> = ({ className }) => {
           "flex gap-1 p-2 bg-blue-100 dark:bg-blue-700 rounded-2xl"
         )}
       >
-        <Link href="/">
-          <Button
-            variant="ghost"
-            className="flex-col gap-1 h-full w-[68px] has-[>svg]:p-1"
-          >
-            <LibraryBig className="size-6" />
-            <div className="font-normal">Книги</div>
-          </Button>
-        </Link>
-        <Link href="/">
-          <Button
-            variant="ghost"
-            className="flex-col gap-1 h-full w-[68px] has-[>svg]:p-1"
-          >
-            <Ticket className="size-6" />
-            <div className="font-normal">Аренды</div>
-          </Button>
-        </Link>
+        <MenuLink pathname={pathname} href="/">
+          <LibraryBig className="size-6" />
+          <div className="font-normal text-sm">Книги</div>
+        </MenuLink>
+        <MenuLink pathname={pathname} href="/borrowings">
+          <Ticket className="size-6" />
+          <div className="font-normal">Аренды</div>
+        </MenuLink>
         {isLoading ? (
-          <Button
-            variant="ghost"
-            className="flex-col gap-1 h-full w-[68px] has-[>svg]:p-1"
-          >
+          <div className="w-[72px] h-[58px] flex items-center justify-center">
             <Spinner className="text-foreground" />
-          </Button>
+          </div>
         ) : isAuthenticated ? (
-          <Link href="/prifile">
-            <Button
-              variant="ghost"
-              className="flex-col gap-1 h-full w-[68px] has-[>svg]:p-1"
-            >
-              <Avatar className="size-6">
-                <AvatarImage
-                  src={user?.avatarURL ? user.avatarURL : undefined}
-                />
-                <AvatarFallback>{`${user?.firstName[0]}${user?.lastName[0]}`}</AvatarFallback>
-              </Avatar>
-              <div className="font-normal">Профиль</div>
-            </Button>
-          </Link>
+          <MenuLink pathname={pathname} href="/profile">
+            <Avatar className="size-6">
+              <AvatarImage src={user?.avatarURL ? user.avatarURL : undefined} />
+              <AvatarFallback>{user?.firstName[0]}</AvatarFallback>
+            </Avatar>
+            <div className="font-normal">Профиль</div>
+          </MenuLink>
         ) : (
-          <Link href="/login">
-            <Button
-              variant="ghost"
-              className="flex-col gap-1 h-full w-[68px] has-[>svg]:p-1"
-            >
-              <LogIn className="size-6" />
-              <div className="font-normal">Вход</div>
-            </Button>
-          </Link>
+          <MenuLink pathname={pathname} href="/login">
+            <LogIn className="size-6" />
+            <div className="font-normal">Вход</div>
+          </MenuLink>
         )}
       </div>
-    </div>
+    </nav>
   );
 };

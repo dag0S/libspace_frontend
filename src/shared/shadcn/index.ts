@@ -41,3 +41,4 @@ export {
 export { Badge } from "./badge";
 export { MultipleSelector, useDebounce } from "./multipleSelector";
 export type { MultipleSelectorRef, Option } from "./multipleSelector";
+export { AspectRatio } from "./aspect-ratio";

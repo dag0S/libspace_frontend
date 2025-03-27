@@ -2,9 +2,7 @@ import { IBook } from "@/src/entities/Book";
 
 export const fetchBooks = async (): Promise<IBook[]> => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/books`, {
-      cache: "no-store",
-    });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/books`);
 
     if (!res.ok) {
       throw new Error("Ошибка при загрузке книг");
