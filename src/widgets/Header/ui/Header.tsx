@@ -1,51 +1,89 @@
+"use client";
+
 import { FC } from "react";
-import { BadgeAlert, Grid3x3, Heart, ListFilter, Search } from "lucide-react";
+import {
+  ArrowLeft,
+  BadgeAlert,
+  Grid3x3,
+  Heart,
+  ListFilter,
+  Search,
+} from "lucide-react";
+import Link from "next/link";
 
 import { cn } from "@/src/shared/lib";
 import { Container } from "@/src/shared/ui";
 import { Button } from "@/src/shared/shadcn";
 import { SwitchTheme } from "@/src/features/SwitchTheme";
 import { FilterDrawer } from "../../FilterDrawer";
+import { useRouter } from "next/navigation";
 
 interface Props {
   className?: string;
+  hasFilters?: boolean;
+  hasGoBack?: boolean;
+  hasSearch?: boolean;
+  hasGrid?: boolean;
 }
 
-export const Header: FC<Props> = ({ className }) => {
+export const Header: FC<Props> = ({
+  className,
+  hasFilters = true,
+  hasGoBack = false,
+  hasSearch = true,
+  hasGrid = true,
+}) => {
+  const router = useRouter();
+
   return (
     <div
       className={cn("border-b py-2 sticky top-0 z-10 bg-background", className)}
     >
       <Container className="flex flex-col gap-2">
         <div className="flex items-center justify-between gap-2">
-          <div className="text-2xl font-bold">LibSpace</div>
+          <div className="flex gap-2">
+            {hasGoBack && (
+              <Button onClick={() => router.back()} size="icon" variant="ghost">
+                <ArrowLeft />
+              </Button>
+            )}
+            <Link href="/" className="text-2xl font-bold">
+              LibSpace
+            </Link>
+          </div>
           <div>
-            <Button variant="ghost" size="icon">
-              <Search />
-            </Button>
-            <Button variant="ghost" size="icon">
-              <Grid3x3 />
-            </Button>
+            {hasSearch && (
+              <Button variant="ghost" size="icon">
+                <Search />
+              </Button>
+            )}
+            {hasGrid && (
+              <Button variant="ghost" size="icon">
+                <Grid3x3 />
+              </Button>
+            )}
             <SwitchTheme />
           </div>
         </div>
 
-        <div className="flex gap-2 overflow-auto">
-          <Button variant="outline">
-            <Heart />
-            <div>Популярные</div>
-          </Button>
-          <Button variant="outline">
-            <BadgeAlert />
-            <div>Последние</div>
-          </Button>
-          <FilterDrawer>
+        {hasFilters && (
+          <div className="flex gap-2 overflow-auto">
             <Button variant="outline">
-              <ListFilter />
-              <div>Фильтрация</div>
+              <Heart />
+              <div>Популярные</div>
             </Button>
-          </FilterDrawer>
-        </div>
+            <Button variant="outline">
+              <BadgeAlert />
+              <div>Последние</div>
+            </Button>
+            <FilterDrawer>
+              <Button variant="outline">
+                <ListFilter />
+                <div>Фильтрация</div>
+              </Button>
+            </FilterDrawer>
+          </div>
+        )}
       </Container>
     </div>
   );

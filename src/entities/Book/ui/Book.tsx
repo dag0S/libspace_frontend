@@ -3,24 +3,25 @@ import Image from "next/image";
 
 import { cn } from "@/src/shared/lib";
 import { AspectRatio } from "@/src/shared/shadcn";
+import { IBook } from "../types/IBook";
+import Link from "next/link";
 
 interface Props {
   className?: string;
-  title: string;
-  bookCoverURL: string | null;
+  book: IBook;
 }
 
-export const Book: FC<Props> = ({ className, bookCoverURL, title }) => {
+export const Book: FC<Props> = ({ className, book }) => {
   return (
-    <div className={cn("flex flex-col", className)}>
-      {bookCoverURL ? (
+    <Link href={`/book/${book.id}`} className={cn("flex flex-col", className)}>
+      {book.bookCoverURL ? (
         <AspectRatio
           ratio={168 / 240}
           className="bg-muted rounded-md overflow-hidden flex items-center"
         >
           <Image
-            src={bookCoverURL}
-            alt={title}
+            src={book.bookCoverURL}
+            alt={book.title}
             width={200}
             height={300}
             className="w-full h-auto max-w-xs"
@@ -29,7 +30,7 @@ export const Book: FC<Props> = ({ className, bookCoverURL, title }) => {
       ) : (
         <div>Без обложки</div>
       )}
-      <div className="line-clamp-2 text-sm">{title}</div>
-    </div>
+      <div className="line-clamp-2 text-sm">{book.title}</div>
+    </Link>
   );
 };

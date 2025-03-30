@@ -1,3 +1,5 @@
+import { Role } from "@/src/shared/types";
+
 export interface ResponseUserDate {
   id: string;
   email: string;
@@ -5,10 +7,4 @@ export interface ResponseUserDate {
   lastName: string;
   avatarURL: string | null;
   role: Role;
-}
-
-enum Role {
-  ADMIN,
-  LIBRARIAN,
-  READER,
 }

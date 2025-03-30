@@ -13,7 +13,7 @@ const ErrorPage: FC<{
   }, [error]);
 
   return (
-    <div className="flex h-full flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center w-full">
       <h2 className="text-center">{error.message || "Что-то пошло не так!"}</h2>
       <Button onClick={() => reset()}>Обновить</Button>
     </div>

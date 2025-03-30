@@ -22,8 +22,7 @@ export const BookList: FC<Props> = async ({ className }) => {
         books.map((book: IBook) => (
           <Book
             key={book.id}
-            bookCoverURL={book.bookCoverURL}
-            title={book.title}
+            book={book}
           />
         ))}
     </div>

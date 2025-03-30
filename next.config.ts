@@ -4,7 +4,9 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
+        protocol: "https",
         hostname: "downloader.disk.yandex.ru",
+        pathname: "/disk/**",
       },
     ],
   },
