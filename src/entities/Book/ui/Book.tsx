@@ -20,7 +20,7 @@ export const Book: FC<Props> = ({ className, book }) => {
           className="bg-muted rounded-md overflow-hidden flex items-center"
         >
           <Image
-            src={book.bookCoverURL}
+            src={`${process.env.NEXT_PUBLIC_IMAGES_API_URL}${book.bookCoverURL}`}
             alt={book.title}
             width={200}
             height={300}

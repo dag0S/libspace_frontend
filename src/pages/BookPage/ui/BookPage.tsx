@@ -1,5 +1,6 @@
 import { FC } from "react";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 import { fetchBookById } from "../api/api";
 import { cn } from "@/src/shared/lib";
@@ -10,9 +11,26 @@ interface Props {
   params: Promise<{ bookId: string }>;
 }
 
+export async function generateMetadata({ params }: Props) {
+  const bookId = (await params).bookId;
+  const book = await fetchBookById(bookId);
+
+  if (!book) {
+    notFound();
+  }
+
+  return {
+    title: `Lib Space | ${book.title}`,
+  };
+}
+
 const BookPage: FC<Props> = async ({ params }) => {
   const bookId = (await params).bookId;
   const book = await fetchBookById(bookId);
+
+  if (!book) {
+    notFound();
+  }
 
   return (
     <div className={cn("pt-12")}>
@@ -21,7 +39,7 @@ const BookPage: FC<Props> = async ({ params }) => {
           <div className="bg-muted rounded-md overflow-hidden flex items-center min-w-[150px] max-w-full min-h-[225px] max-h-full">
             {book.bookCoverURL ? (
               <Image
-                src={book.bookCoverURL}
+                src={`${process.env.NEXT_PUBLIC_IMAGES_API_URL}${book.bookCoverURL}`}
                 alt={book.title}
                 width={200}
                 height={300}

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
 import { Header } from "@/src/widgets/Header";
-import { Menu } from "@/src/widgets/Menu";
 
 export const metadata: Metadata = {
   title: "Lib Space | Книга",
@@ -23,7 +22,6 @@ export default function BookLayout({
         hasGoBack
       />
       <main className="flex-1 flex">{children}</main>
-      <Menu />
     </>
   );
 }

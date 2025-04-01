@@ -1,1 +1,1 @@
-export { BookPage as default } from "@/src/pages/BookPage";
+export { BookPage as default, generateMetadata } from "@/src/pages/BookPage";
