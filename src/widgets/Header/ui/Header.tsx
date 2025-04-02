@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import {
   ArrowLeft,
   BadgeAlert,
@@ -24,6 +24,7 @@ interface Props {
   hasGoBack?: boolean;
   hasSearch?: boolean;
   hasGrid?: boolean;
+  sidebarTrigger?: ReactNode;
 }
 
 export const Header: FC<Props> = ({
@@ -32,6 +33,7 @@ export const Header: FC<Props> = ({
   hasGoBack = false,
   hasSearch = true,
   hasGrid = true,
+  sidebarTrigger,
 }) => {
   const router = useRouter();
 
@@ -41,7 +43,8 @@ export const Header: FC<Props> = ({
     >
       <Container className="flex flex-col gap-2">
         <div className="flex items-center justify-between gap-2">
-          <div className="flex gap-2">
+          <div className="flex items-center gap-2">
+            {sidebarTrigger}
             {hasGoBack && (
               <Button onClick={() => router.back()} size="icon" variant="ghost">
                 <ArrowLeft />
