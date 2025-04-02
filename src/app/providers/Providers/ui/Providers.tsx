@@ -5,6 +5,7 @@ import NextTopLoader from "nextjs-toploader";
 
 import { StoreProvider } from "../../StoreProvider";
 import { ThemeProvider } from "../../ThemeProvider";
+import { AuthProvider } from "../../AuthProvider";
 
 interface Props {
   children: ReactNode;
@@ -19,8 +20,10 @@ export const Providers: FC<Props> = ({ children }) => {
         enableSystem
         disableTransitionOnChange
       >
-        <NextTopLoader showSpinner={false} color="#2563ea" />
-        {children}
+        <AuthProvider>
+          <NextTopLoader showSpinner={false} color="#2563ea" />
+          {children}
+        </AuthProvider>
       </ThemeProvider>
     </StoreProvider>
   );

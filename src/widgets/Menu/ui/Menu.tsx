@@ -11,8 +11,8 @@ import {
   AvatarImage,
   Spinner,
 } from "@/src/shared/shadcn";
-import { useAuth } from "@/src/shared/hooks";
 import { MenuLink } from "./MenuLink";
+import { useMeQuery } from "@/src/features/Auth/api/api";
 
 interface Props {
   className?: string;
@@ -21,7 +21,7 @@ interface Props {
 export const Menu: FC<Props> = ({ className }) => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const { user, isAuthenticated, isLoading } = useAuth();
+  const { data: user, isLoading } = useMeQuery();
   const pathname = usePathname();
 
   useEffect(() => {
@@ -65,7 +65,7 @@ export const Menu: FC<Props> = ({ className }) => {
           <div className="w-[72px] h-[58px] flex items-center justify-center">
             <Spinner className="text-foreground" />
           </div>
-        ) : isAuthenticated ? (
+        ) : user ? (
           <MenuLink pathname={pathname} href="/profile">
             <Avatar className="size-6">
               <AvatarImage src={user?.avatarURL ? user.avatarURL : undefined} />

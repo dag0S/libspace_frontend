@@ -42,3 +42,12 @@ export { Badge } from "./badge";
 export { MultipleSelector, useDebounce } from "./multipleSelector";
 export type { MultipleSelectorRef, Option } from "./multipleSelector";
 export { AspectRatio } from "./aspect-ratio";
+export {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./card";

@@ -10,14 +10,13 @@ const initialState: AuthUserSchema = {
 export const authUserSlice = createSlice({
   name: "authUser",
   initialState,
-  reducers: {
-    logout: (state) => {
-      state.user = null;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addMatcher(authApi.endpoints.me.matchFulfilled, (state, action) => {
       state.user = action.payload;
+    });
+    builder.addMatcher(authApi.endpoints.logout.matchFulfilled, (state) => {
+      state.user = null;
     });
   },
 });

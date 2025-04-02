@@ -1,11 +1,21 @@
+"use client";
+
 import Link from "next/link";
 import { FC } from "react";
+import { redirect } from "next/navigation";
 
 import { Separator } from "@/src/shared/shadcn";
 import { Container } from "@/src/shared/ui";
 import { LoginForm } from "@/src/widgets/LoginForm";
+import { useAppSelector } from "@/src/shared/hooks";
 
 const LoginPage: FC = () => {
+  const { user } = useAppSelector((state) => state.authUser);
+
+  if (user) {
+    redirect("/");
+  }
+
   return (
     <div className="h-screen flex justify-center items-center">
       <Container className="px-5 flex flex-col gap-6 items-center">
