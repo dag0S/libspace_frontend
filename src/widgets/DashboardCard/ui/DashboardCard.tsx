@@ -26,7 +26,7 @@ export const DashboardCard: FC<Props> = ({ card }) => {
       </CardHeader>
       <CardFooter className="justify-end">
         <Link href={card.href}>
-          <Button>
+          <Button className="cursor-pointer">
             <div>Перейти</div>
             <ArrowRight />
           </Button>

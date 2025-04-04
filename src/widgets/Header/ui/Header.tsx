@@ -10,13 +10,14 @@ import {
   Search,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { cn } from "@/src/shared/lib";
 import { Container } from "@/src/shared/ui";
 import { Button } from "@/src/shared/shadcn";
 import { SwitchTheme } from "@/src/features/SwitchTheme";
 import { FilterDrawer } from "../../FilterDrawer";
-import { useRouter } from "next/navigation";
+import { MENU_LIST } from "@/src/shared/constant";
 
 interface Props {
   className?: string;
@@ -38,7 +39,7 @@ export const Header: FC<Props> = ({
   const router = useRouter();
 
   return (
-    <div
+    <header
       className={cn("border-b py-2 sticky top-0 z-10 bg-background", className)}
     >
       <Container className="flex flex-col gap-2">
@@ -50,7 +51,7 @@ export const Header: FC<Props> = ({
                 <ArrowLeft />
               </Button>
             )}
-            <Link href="/" className="text-2xl font-bold">
+            <Link href={MENU_LIST.main} className="text-2xl font-bold">
               LibSpace
             </Link>
           </div>
@@ -88,6 +89,6 @@ export const Header: FC<Props> = ({
           </div>
         )}
       </Container>
-    </div>
+    </header>
   );
 };

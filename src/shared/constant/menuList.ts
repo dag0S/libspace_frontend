@@ -1,0 +1,16 @@
+export const MENU_LIST = {
+  main: "/",
+  login: "/login",
+  register: "/register",
+  profile: "/profile",
+  book: "/book",
+  borrowings: "/borrowings",
+  not_found: "/not-found",
+  dashboard: "/dashboard",
+  dashboard_books: "/dashboard/books",
+  dashboard_users: "/dashboard/users",
+  dashboard_borrowings: "/dashboard/borrowings",
+  dashboard_authors: "/dashboard/authors",
+  dashboard_genres: "/dashboard/genres",
+  dashboard_logs: "/dashboard/logs",
+} as const;

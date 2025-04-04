@@ -1,7 +1,7 @@
 "use client";
 
 import { FC, useEffect, useState } from "react";
-import { LibraryBig, LogIn, Ticket } from "lucide-react";
+import { ChartPie, LibraryBig, LogIn, Ticket } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { cn } from "@/src/shared/lib";
@@ -13,6 +13,7 @@ import {
 } from "@/src/shared/shadcn";
 import { MenuLink } from "./MenuLink";
 import { useMeQuery } from "@/src/features/Auth/api/api";
+import { MENU_LIST } from "@/src/shared/constant";
 
 interface Props {
   className?: string;
@@ -53,11 +54,11 @@ export const Menu: FC<Props> = ({ className }) => {
           "flex gap-1 p-2 bg-blue-100 dark:bg-blue-700 rounded-2xl"
         )}
       >
-        <MenuLink pathname={pathname} href="/">
+        <MenuLink pathname={pathname} href={MENU_LIST.main}>
           <LibraryBig className="size-6" />
           <div className="font-normal text-sm">Книги</div>
         </MenuLink>
-        <MenuLink pathname={pathname} href="/borrowings">
+        <MenuLink pathname={pathname} href={MENU_LIST.borrowings}>
           <Ticket className="size-6" />
           <div className="font-normal">Аренды</div>
         </MenuLink>
@@ -66,19 +67,23 @@ export const Menu: FC<Props> = ({ className }) => {
             <Spinner className="text-foreground" />
           </div>
         ) : user ? (
-          <MenuLink pathname={pathname} href="/profile">
-            <Avatar className="size-6">
+          <MenuLink pathname={pathname} href={MENU_LIST.profile}>
+            <Avatar className="size-6 text-sm border-foreground border-2">
               <AvatarImage src={user?.avatarURL ? user.avatarURL : undefined} />
               <AvatarFallback>{user?.firstName[0]}</AvatarFallback>
             </Avatar>
             <div className="font-normal">Профиль</div>
           </MenuLink>
         ) : (
-          <MenuLink pathname={pathname} href="/login">
+          <MenuLink pathname={pathname} href={MENU_LIST.login}>
             <LogIn className="size-6" />
             <div className="font-normal">Вход</div>
           </MenuLink>
         )}
+        <MenuLink pathname={pathname} href={MENU_LIST.dashboard}>
+          <ChartPie className="size-6" />
+          <div className="font-normal">Админка</div>
+        </MenuLink>
       </div>
     </nav>
   );
