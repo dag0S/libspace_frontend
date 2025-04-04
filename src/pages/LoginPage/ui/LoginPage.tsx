@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { FC } from "react";
 import { redirect } from "next/navigation";
@@ -7,13 +5,14 @@ import { redirect } from "next/navigation";
 import { Separator } from "@/src/shared/shadcn";
 import { Container } from "@/src/shared/ui";
 import { LoginForm } from "@/src/widgets/LoginForm";
-import { useAppSelector } from "@/src/shared/hooks";
+import { authCheck } from "@/src/shared/utils";
+import { MENU_LIST } from "@/src/shared/constant";
 
-const LoginPage: FC = () => {
-  const { user } = useAppSelector((state) => state.authUser);
+const LoginPage: FC = async () => {
+  const { isAuthenticated } = await authCheck();
 
-  if (user) {
-    redirect("/");
+  if (isAuthenticated) {
+    redirect(MENU_LIST.profile);
   }
 
   return (

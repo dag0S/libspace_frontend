@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
 
 import { Header } from "@/src/widgets/Header";
 import { SidebarProvider, SidebarTrigger } from "@/src/shared/shadcn";
 import { DashBoardSidebar } from "@/src/widgets/DashBoardSidebar";
+import { authCheck } from "@/src/shared/utils/authCheck";
 import { MENU_LIST } from "@/src/shared/constant";
 
 export const metadata: Metadata = {
@@ -17,25 +17,11 @@ export default async function DashboardLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = cookies();
-  const token = (await cookieStore).get("access_token")?.value;
+  const { user } = await authCheck();
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
-    headers: {
-      cookie: `access_token=${token}`,
-    },
-    cache: "no-store",
-  });
-
-  if (res.status === 401) {
-    console.log(res.status);
-    console.log(await res.json());
-    console.log("redirect to login");
-    console.log(token);
+  if (!user) {
     redirect(MENU_LIST.login);
   }
-
-  const user = await res.json();
 
   return (
     <SidebarProvider>
