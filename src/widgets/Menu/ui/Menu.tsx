@@ -58,10 +58,12 @@ export const Menu: FC<Props> = ({ className }) => {
           <LibraryBig className="size-6" />
           <div className="font-normal text-sm">Книги</div>
         </MenuLink>
-        <MenuLink pathname={pathname} href={MENU_LIST.borrowings}>
-          <Ticket className="size-6" />
-          <div className="font-normal">Аренды</div>
-        </MenuLink>
+        {user && (
+          <MenuLink pathname={pathname} href={MENU_LIST.borrowings}>
+            <Ticket className="size-6" />
+            <div className="font-normal">Аренды</div>
+          </MenuLink>
+        )}
         {isLoading ? (
           <div className="w-[72px] h-[58px] flex items-center justify-center">
             <Spinner className="text-foreground" />
@@ -80,10 +82,12 @@ export const Menu: FC<Props> = ({ className }) => {
             <div className="font-normal">Вход</div>
           </MenuLink>
         )}
-        <MenuLink pathname={pathname} href={MENU_LIST.dashboard}>
-          <ChartPie className="size-6" />
-          <div className="font-normal">Админка</div>
-        </MenuLink>
+        {user && (user.role === "ADMIN" || user.role === "LIBRARIAN") && (
+          <MenuLink pathname={pathname} href={MENU_LIST.dashboard}>
+            <ChartPie className="size-6" />
+            <div className="font-normal">Админка</div>
+          </MenuLink>
+        )}
       </div>
     </nav>
   );
