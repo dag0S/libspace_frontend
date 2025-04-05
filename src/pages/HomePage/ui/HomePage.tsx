@@ -5,13 +5,11 @@ import { BookList, BookListSkeleton } from "@/src/widgets/BookList";
 
 const Page: FC = async () => {
   return (
-    <div>
       <Container>
         <Suspense fallback={<BookListSkeleton />}>
           <BookList />
         </Suspense>
       </Container>
-    </div>
   );
 };
 

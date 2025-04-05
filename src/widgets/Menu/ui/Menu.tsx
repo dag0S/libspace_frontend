@@ -2,7 +2,6 @@
 
 import { FC, useEffect, useState } from "react";
 import { ChartPie, LibraryBig, LogIn, Ticket } from "lucide-react";
-import { usePathname } from "next/navigation";
 
 import { cn } from "@/src/shared/lib";
 import {
@@ -23,7 +22,6 @@ export const Menu: FC<Props> = ({ className }) => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const { data: user, isLoading } = useMeQuery();
-  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,12 +52,12 @@ export const Menu: FC<Props> = ({ className }) => {
           "flex gap-1 p-2 bg-blue-100 dark:bg-blue-700 rounded-2xl"
         )}
       >
-        <MenuLink pathname={pathname} href={MENU_LIST.main}>
+        <MenuLink href={MENU_LIST.main}>
           <LibraryBig className="size-6" />
           <div className="font-normal text-sm">Книги</div>
         </MenuLink>
         {user && (
-          <MenuLink pathname={pathname} href={MENU_LIST.borrowings}>
+          <MenuLink href={MENU_LIST.borrowings}>
             <Ticket className="size-6" />
             <div className="font-normal">Аренды</div>
           </MenuLink>
@@ -69,7 +67,7 @@ export const Menu: FC<Props> = ({ className }) => {
             <Spinner className="text-foreground" />
           </div>
         ) : user ? (
-          <MenuLink pathname={pathname} href={MENU_LIST.profile}>
+          <MenuLink href={MENU_LIST.profile}>
             <Avatar className="size-6 text-sm border-foreground border-2">
               <AvatarImage src={user?.avatarURL ? user.avatarURL : undefined} />
               <AvatarFallback>{user?.firstName[0]}</AvatarFallback>
@@ -77,13 +75,13 @@ export const Menu: FC<Props> = ({ className }) => {
             <div className="font-normal">Профиль</div>
           </MenuLink>
         ) : (
-          <MenuLink pathname={pathname} href={MENU_LIST.login}>
+          <MenuLink href={MENU_LIST.login}>
             <LogIn className="size-6" />
             <div className="font-normal">Вход</div>
           </MenuLink>
         )}
         {user && (user.role === "ADMIN" || user.role === "LIBRARIAN") && (
-          <MenuLink pathname={pathname} href={MENU_LIST.dashboard}>
+          <MenuLink href={MENU_LIST.dashboard}>
             <ChartPie className="size-6" />
             <div className="font-normal">Админка</div>
           </MenuLink>

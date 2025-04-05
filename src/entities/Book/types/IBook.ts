@@ -5,6 +5,7 @@ export interface IBook {
   bookCoverURL: string | null;
   authorId: string;
   copies: number;
+  views: number;
   createdAt: Date;
   updatedAt: Date;
 }
