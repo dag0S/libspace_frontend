@@ -6,10 +6,13 @@ import { fetchBooks } from "../api/api";
 
 interface Props {
   className?: string;
+  searchBy?: string;
 }
 
-export const BookList: FC<Props> = async ({ className }) => {
-  const books = await fetchBooks();
+export const BookList: FC<Props> = async ({ className, searchBy }) => {
+  const books = await fetchBooks({
+    searchBy,
+  });
 
   return (
     <div
@@ -19,12 +22,7 @@ export const BookList: FC<Props> = async ({ className }) => {
       )}
     >
       {books.length > 0 &&
-        books.map((book: IBook) => (
-          <Book
-            key={book.id}
-            book={book}
-          />
-        ))}
+        books.map((book: IBook) => <Book key={book.id} book={book} />)}
     </div>
   );
 };

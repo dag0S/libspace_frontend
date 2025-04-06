@@ -1,8 +1,15 @@
 import { IBook } from "@/src/entities/Book";
+import { BooksQueryParams } from "../types/types";
 
-export const fetchBooks = async (): Promise<IBook[]> => {
+export const fetchBooks = async (
+  queryParams: BooksQueryParams
+): Promise<IBook[]> => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/books`);
+    const { searchBy } = queryParams;
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/books?searchBy=${searchBy}`
+    );
 
     if (!res.ok) {
       throw new Error("Ошибка при загрузке книг");

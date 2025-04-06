@@ -1,16 +1,24 @@
 import { FC, Suspense } from "react";
 
 import { Container } from "@/src/shared/ui";
-import { BookList, BookListSkeleton } from "@/src/widgets/BookList";
+import {
+  BookList,
+  BookListSkeleton,
+  BooksQueryParams,
+} from "@/src/widgets/BookList";
 
-const Page: FC = async () => {
+const HomePage: FC<{
+  searchParams?: BooksQueryParams;
+}> = async ({ searchParams }) => {
+  const searchBy = (await searchParams)?.searchBy || "";
+
   return (
-      <Container>
-        <Suspense fallback={<BookListSkeleton />}>
-          <BookList />
-        </Suspense>
-      </Container>
+    <Container>
+      <Suspense fallback={<BookListSkeleton />}>
+        <BookList searchBy={searchBy} />
+      </Suspense>
+    </Container>
   );
 };
 
-export default Page;
+export default HomePage;

@@ -1,13 +1,14 @@
 "use client";
 
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useState } from "react";
 import {
   ArrowLeft,
   BadgeAlert,
   Grid3x3,
   Heart,
   ListFilter,
-  Search,
+  SearchIcon,
+  X,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -18,6 +19,7 @@ import { Button } from "@/src/shared/shadcn";
 import { SwitchTheme } from "@/src/features/SwitchTheme";
 import { FilterDrawer } from "../../FilterDrawer";
 import { MENU_LIST } from "@/src/shared/constant";
+import { Search } from "@/src/features/Search";
 
 interface Props {
   className?: string;
@@ -37,6 +39,11 @@ export const Header: FC<Props> = ({
   sidebarTrigger,
 }) => {
   const router = useRouter();
+  const [showSearch, setShowSearch] = useState(false);
+
+  const handleToggleShowSearch = () => {
+    setShowSearch((prev) => !prev);
+  };
 
   return (
     <header
@@ -57,8 +64,12 @@ export const Header: FC<Props> = ({
           </div>
           <div className="flex items-center gap-1">
             {hasSearch && (
-              <Button variant="ghost" size="icon">
-                <Search />
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleToggleShowSearch}
+              >
+                {showSearch ? <X /> : <SearchIcon />}
               </Button>
             )}
             {hasGrid && (
@@ -69,7 +80,7 @@ export const Header: FC<Props> = ({
             <SwitchTheme />
           </div>
         </div>
-
+        {showSearch && hasSearch && <Search />}
         {hasFilters && (
           <div className="flex gap-2 overflow-auto">
             <Button variant="outline">
