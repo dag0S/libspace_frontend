@@ -5,10 +5,10 @@ export const fetchBooks = async (
   queryParams: BooksQueryParams
 ): Promise<IBook[]> => {
   try {
-    const { searchBy } = queryParams;
+    const { searchBy, sortBy } = queryParams;
 
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/books?searchBy=${searchBy}`
+      `${process.env.NEXT_PUBLIC_API_URL}/books?searchBy=${searchBy}&sortBy=${sortBy}`
     );
 
     if (!res.ok) {

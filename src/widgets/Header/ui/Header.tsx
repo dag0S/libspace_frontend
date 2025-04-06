@@ -1,15 +1,7 @@
 "use client";
 
 import { FC, ReactNode, useState } from "react";
-import {
-  ArrowLeft,
-  BadgeAlert,
-  Grid3x3,
-  Heart,
-  ListFilter,
-  SearchIcon,
-  X,
-} from "lucide-react";
+import { ArrowLeft, Grid3x3, SearchIcon, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -17,9 +9,9 @@ import { cn } from "@/src/shared/lib";
 import { Container } from "@/src/shared/ui";
 import { Button } from "@/src/shared/shadcn";
 import { SwitchTheme } from "@/src/features/SwitchTheme";
-import { FilterDrawer } from "../../FilterDrawer";
 import { MENU_LIST } from "@/src/shared/constant";
 import { Search } from "@/src/features/Search";
+import { Filters } from "@/src/features/Filters";
 
 interface Props {
   className?: string;
@@ -81,24 +73,7 @@ export const Header: FC<Props> = ({
           </div>
         </div>
         {showSearch && hasSearch && <Search />}
-        {hasFilters && (
-          <div className="flex gap-2 overflow-auto">
-            <Button variant="outline">
-              <Heart />
-              <div>Популярные</div>
-            </Button>
-            <Button variant="outline">
-              <BadgeAlert />
-              <div>Последние</div>
-            </Button>
-            <FilterDrawer>
-              <Button variant="outline">
-                <ListFilter />
-                <div>Фильтрация</div>
-              </Button>
-            </FilterDrawer>
-          </div>
-        )}
+        {hasFilters && <Filters />}
       </Container>
     </header>
   );

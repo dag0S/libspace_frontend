@@ -11,11 +11,12 @@ const HomePage: FC<{
   searchParams?: BooksQueryParams;
 }> = async ({ searchParams }) => {
   const searchBy = (await searchParams)?.searchBy || "";
+  const sortBy = (await searchParams)?.sortBy || "";
 
   return (
     <Container>
       <Suspense fallback={<BookListSkeleton />}>
-        <BookList searchBy={searchBy} />
+        <BookList searchBy={searchBy} sortBy={sortBy} />
       </Suspense>
     </Container>
   );

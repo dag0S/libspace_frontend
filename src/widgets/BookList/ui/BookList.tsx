@@ -7,11 +7,13 @@ import { fetchBooks } from "../api/api";
 interface Props {
   className?: string;
   searchBy?: string;
+  sortBy?: string;
 }
 
-export const BookList: FC<Props> = async ({ className, searchBy }) => {
+export const BookList: FC<Props> = async ({ className, searchBy, sortBy }) => {
   const books = await fetchBooks({
     searchBy,
+    sortBy,
   });
 
   return (
