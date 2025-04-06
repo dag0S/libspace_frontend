@@ -12,11 +12,18 @@ const HomePage: FC<{
 }> = async ({ searchParams }) => {
   const searchBy = (await searchParams)?.searchBy || "";
   const sortBy = (await searchParams)?.sortBy || "";
+  const genres = (await searchParams)?.genres || "";
+  const authors = (await searchParams)?.authors || "";
 
   return (
     <Container>
       <Suspense fallback={<BookListSkeleton />}>
-        <BookList searchBy={searchBy} sortBy={sortBy} />
+        <BookList
+          searchBy={searchBy}
+          sortBy={sortBy}
+          authors={authors}
+          genres={genres}
+        />
       </Suspense>
     </Container>
   );

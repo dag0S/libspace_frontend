@@ -8,12 +8,22 @@ interface Props {
   className?: string;
   searchBy?: string;
   sortBy?: string;
+  genres?: string;
+  authors?: string;
 }
 
-export const BookList: FC<Props> = async ({ className, searchBy, sortBy }) => {
+export const BookList: FC<Props> = async ({
+  className,
+  searchBy,
+  sortBy,
+  authors,
+  genres,
+}) => {
   const books = await fetchBooks({
     searchBy,
     sortBy,
+    authors,
+    genres,
   });
 
   return (
