@@ -27,7 +27,7 @@ interface Props {
 
 export const ProfileContent: FC<Props> = ({ className }) => {
   const { user } = useAppSelector((state) => state.authUser);
-  const [logout] = useLogoutMutation();
+  const [logout, {isLoading: isLoadingLogout}] = useLogoutMutation();
   const dispatch = useAppDispatch();
 
   const handleLogout = async () => {
@@ -87,7 +87,7 @@ export const ProfileContent: FC<Props> = ({ className }) => {
           <div>Редактировать профиль</div>
           <Edit3 />
         </Button>
-        <Button onClick={handleLogout} disabled={!user}>
+        <Button onClick={handleLogout} disabled={!user} loading={isLoadingLogout}>
           <div>Выйти</div>
           <LogOut />
         </Button>

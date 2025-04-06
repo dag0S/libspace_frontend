@@ -79,7 +79,8 @@ export const BorrowABook: FC<Props> = ({ className, bookId, copies }) => {
       ) : (
         <Button
           size="lg"
-          disabled={isLoading || copies <= 0}
+          disabled={copies <= 0}
+          loading={isLoading}
           onClick={handleBorrowABook}
         >
           Взять в аренду

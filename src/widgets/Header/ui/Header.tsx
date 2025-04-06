@@ -55,7 +55,7 @@ export const Header: FC<Props> = ({
               LibSpace
             </Link>
           </div>
-          <div>
+          <div className="flex items-center gap-1">
             {hasSearch && (
               <Button variant="ghost" size="icon">
                 <Search />
