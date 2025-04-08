@@ -3,6 +3,7 @@
 import { FC } from "react";
 import { redirect } from "next/navigation";
 import { Edit3, LogOut } from "lucide-react";
+import toast from "react-hot-toast";
 
 import { cn } from "@/src/shared/lib";
 import { useAppDispatch, useAppSelector } from "@/src/shared/hooks";
@@ -27,21 +28,24 @@ interface Props {
 
 export const ProfileContent: FC<Props> = ({ className }) => {
   const { user } = useAppSelector((state) => state.authUser);
-  const [logout, {isLoading: isLoadingLogout}] = useLogoutMutation();
+  const [logout, { isLoading: isLoadingLogout }] = useLogoutMutation();
   const dispatch = useAppDispatch();
 
   const handleLogout = async () => {
     try {
       await logout().unwrap();
       dispatch(authApi.util.resetApiState());
+      toast.success("Вы успешно вышли из аккаунта");
     } catch (err) {
       const mayBeError = isErrorWithMessage(err);
-      console.log(err);
+
       if (mayBeError) {
         console.error(err.data.message);
       } else {
         console.error("Неизвестная ошибка");
       }
+
+      toast.error("Не удалось выйти из аккаунта");
     }
     redirect("/login");
   };
@@ -87,7 +91,11 @@ export const ProfileContent: FC<Props> = ({ className }) => {
           <div>Редактировать профиль</div>
           <Edit3 />
         </Button>
-        <Button onClick={handleLogout} disabled={!user} loading={isLoadingLogout}>
+        <Button
+          onClick={handleLogout}
+          disabled={!user}
+          loading={isLoadingLogout}
+        >
           <div>Выйти</div>
           <LogOut />
         </Button>

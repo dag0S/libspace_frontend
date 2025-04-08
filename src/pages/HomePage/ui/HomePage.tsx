@@ -16,7 +16,7 @@ const HomePage: FC<{
   const authors = (await searchParams)?.authors || "";
 
   return (
-    <Container>
+    <Container className="mb-2">
       <Suspense fallback={<BookListSkeleton />}>
         <BookList
           searchBy={searchBy}

@@ -13,6 +13,7 @@ import {
 import { isErrorWithMessage } from "@/src/shared/utils";
 import { MENU_LIST } from "@/src/shared/constant";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 interface Props {
   className?: string;
@@ -43,6 +44,8 @@ export const BorrowABook: FC<Props> = ({ className, bookId, copies }) => {
       }
 
       router.push(MENU_LIST.borrowings);
+
+      toast.success("Вы успешно взяли книгу в аренду");
     } catch (err) {
       const mayBeError = isErrorWithMessage(err);
 
@@ -51,6 +54,8 @@ export const BorrowABook: FC<Props> = ({ className, bookId, copies }) => {
       } else {
         setError("Неизвестная ошибка");
       }
+
+      toast.error("Не удалось взять книгу в аренду");
     }
   };
 

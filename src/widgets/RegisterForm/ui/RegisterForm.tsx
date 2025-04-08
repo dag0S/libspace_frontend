@@ -1,8 +1,10 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 import { cn } from "@/src/shared/lib";
 import {
@@ -15,13 +17,21 @@ import {
   FormMessage,
   Input,
 } from "@/src/shared/shadcn";
-import { Register, registerFormSchema } from "@/src/features/Auth";
+import {
+  Register,
+  registerFormSchema,
+  useRegisterMutation,
+} from "@/src/features/Auth";
+import { isErrorWithMessage } from "@/src/shared/utils";
 
 interface Props {
   className?: string;
 }
 
 export const RegisterForm: FC<Props> = ({ className }) => {
+  const [userRegister, { isLoading }] = useRegisterMutation();
+  const [error, setError] = useState("");
+  const router = useRouter();
   const form = useForm<Register>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
@@ -33,8 +43,27 @@ export const RegisterForm: FC<Props> = ({ className }) => {
     },
   });
 
-  const onSubmit = (values: Register) => {
-    console.log(values);
+  const onSubmit = async (values: Register) => {
+    try {
+      setError("");
+
+      if (!isLoading) {
+        await userRegister(values).unwrap();
+        router.push("/");
+      }
+
+      toast.success("Вы успешно зарегистрировались");
+    } catch (err) {
+      const mayBeError = isErrorWithMessage(err);
+
+      if (mayBeError) {
+        setError(err.data.message);
+      } else {
+        setError("Неизвестная ошибка");
+      }
+
+      toast.error("Не удалось зарегистрироваться");
+    }
   };
 
   return (
@@ -115,6 +144,7 @@ export const RegisterForm: FC<Props> = ({ className }) => {
         <Button type="submit" className="w-full" size="lg">
           Зарегистрироваться
         </Button>
+        {error && <div className="text-destructive">{error}</div>}
       </form>
     </Form>
   );

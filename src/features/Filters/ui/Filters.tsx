@@ -1,12 +1,12 @@
 "use client";
 
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { BadgeAlert, Heart, ListFilter } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { cn } from "@/src/shared/lib";
 import { Button } from "@/src/shared/shadcn";
 import { FilterDrawer } from "@/src/widgets/FilterDrawer";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface Props {
   className?: string;
@@ -18,15 +18,6 @@ export const Filters: FC<Props> = ({ className }) => {
   const router = useRouter();
 
   const currentSort = searchParams?.get("sortBy") || "views";
-
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams?.toString());
-
-    if (!params.has("sortBy")) {
-      params.set("sortBy", "views");
-      router.replace(`${pathname}?${params.toString()}`);
-    }
-  }, []);
 
   const handleSortByOrder = (orderBy: string) => {
     const params = new URLSearchParams(searchParams?.toString());

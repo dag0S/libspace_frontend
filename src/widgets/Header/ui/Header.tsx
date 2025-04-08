@@ -1,9 +1,9 @@
 "use client";
 
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode, useEffect, useRef, useState } from "react";
 import { ArrowLeft, Grid3x3, SearchIcon, X } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { cn } from "@/src/shared/lib";
 import { Container } from "@/src/shared/ui";
@@ -32,10 +32,26 @@ export const Header: FC<Props> = ({
 }) => {
   const router = useRouter();
   const [showSearch, setShowSearch] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const searchParams = useSearchParams();
+
+  const currentSearchBy = searchParams?.get("searchBy");
 
   const handleToggleShowSearch = () => {
     setShowSearch((prev) => !prev);
   };
+
+  useEffect(() => {
+    if (showSearch && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [showSearch]);
+
+  useEffect(() => {
+    if (currentSearchBy) {
+      setShowSearch(true);
+    }
+  }, []);
 
   return (
     <header
@@ -72,7 +88,7 @@ export const Header: FC<Props> = ({
             <SwitchTheme />
           </div>
         </div>
-        {showSearch && hasSearch && <Search />}
+        {showSearch && hasSearch && <Search ref={searchInputRef} />}
         {hasFilters && <Filters />}
       </Container>
     </header>

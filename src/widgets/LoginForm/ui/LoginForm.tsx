@@ -3,6 +3,8 @@
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 import { cn } from "@/src/shared/lib";
 import {
@@ -16,7 +18,6 @@ import {
   Input,
 } from "@/src/shared/shadcn";
 import { Login, loginFormSchema, useLoginMutation } from "@/src/features/Auth";
-import { useRouter } from "next/navigation";
 import { isErrorWithMessage } from "@/src/shared/utils";
 
 interface Props {
@@ -43,6 +44,8 @@ export const LoginForm: FC<Props> = ({ className }) => {
         await userLogin(values).unwrap();
         router.push("/");
       }
+
+      toast.success("Вы успешно вошли в свой аккаунт");
     } catch (err) {
       const mayBeError = isErrorWithMessage(err);
 
@@ -51,6 +54,8 @@ export const LoginForm: FC<Props> = ({ className }) => {
       } else {
         setError("Неизвестная ошибка");
       }
+
+      toast.error("Не удалось войти в аккаунт");
     }
   };
 

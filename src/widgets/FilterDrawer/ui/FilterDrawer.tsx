@@ -1,6 +1,9 @@
 "use client";
 
 import { FC, ReactNode, useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import toast from "react-hot-toast";
+import { useDebouncedCallback } from "use-debounce";
 
 import {
   Button,
@@ -15,7 +18,6 @@ import {
 import { authorToOption, genreToOption } from "@/src/shared/utils";
 import { useGetGenresQuery } from "@/src/entities/Genre";
 import { useGetAuthorsQuery } from "@/src/entities/Author";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface Props {
   className?: string;
@@ -35,16 +37,56 @@ export const FilterDrawer: FC<Props> = ({ children }) => {
   const authorOptions = authors && authors.map(authorToOption);
 
   useEffect(() => {
+    if (!genreOptions || !authorOptions) return;
+
+    const authorsParam = searchParams
+      ?.get("authors")
+      ?.split(",")
+      .map((id) => authorOptions?.find((genre) => genre.value === id))
+      .filter(Boolean) as Option[];
+    const genresParam = searchParams
+      ?.get("genres")
+      ?.split(",")
+      .map((id) => genreOptions?.find((genre) => genre.value === id))
+      .filter(Boolean) as Option[];
+
+    setGenresSelected(genresParam);
+    setAuthorsSelected(authorsParam);
+  }, [genres, authors]);
+
+  const handleFilterByGenres = useDebouncedCallback((genres: Option[]) => {
     const params = new URLSearchParams(searchParams?.toString());
 
-    params.set("genres", genresSelected.map((genre) => genre.value).join(","));
-    params.set(
-      "authors",
-      authorsSelected.map((author) => author.value).join(",")
-    );
+    if (genres) {
+      params.set("genres", genres.map((genre) => genre.value).join(","));
+    } else {
+      params.delete("genres");
+    }
 
     router.replace(`${pathname}?${params.toString()}`);
-  }, [authorsSelected, genresSelected, pathname, router, searchParams]);
+  }, 1000);
+
+  const handleFilterByAuthors = useDebouncedCallback((authors: Option[]) => {
+    const params = new URLSearchParams(searchParams?.toString());
+
+    if (authors) {
+      params.set("authors", authors.map((author) => author.value).join(","));
+    } else {
+      params.delete("authors");
+    }
+
+    router.replace(`${pathname}?${params.toString()}`);
+  }, 1000);
+
+  const handleSetGenres = (option: Option[]) => {
+    setGenresSelected(option);
+    handleFilterByGenres(option);
+  };
+
+  const handleSetAuthors = (option: Option[]) => {
+    setAuthorsSelected(option);
+    handleFilterByAuthors(option);
+  };
 
   const handleClearFilters = () => {
     setAuthorsSelected([]);
@@ -60,7 +102,7 @@ export const FilterDrawer: FC<Props> = ({ children }) => {
   return (
     <Drawer>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="h-1/2">
+      <DrawerContent className="h-5/6">
         <DrawerHeader>
           <div className="flex justify-between items-center gap-2">
             <DrawerTitle className="mb-2 text-xl">Фильтрация</DrawerTitle>
@@ -74,15 +116,27 @@ export const FilterDrawer: FC<Props> = ({ children }) => {
           </div>
           <div className="flex flex-col gap-2">
             <MultipleSelector
+              maxSelected={3}
+              onMaxSelected={(maxLimit) => {
+                toast.error(
+                  `Вы достигли максимального количества выбранных жанров: ${maxLimit}`
+                );
+              }}
               value={genresSelected}
-              onChange={setGenresSelected}
+              onChange={handleSetGenres}
               options={genreOptions}
               placeholder="Выберите жанры"
               emptyIndicator={noResultsFound}
             />
             <MultipleSelector
+              onMaxSelected={(maxLimit) => {
+                toast.error(
+                  `Вы достигли максимального количества выбранных авторов: ${maxLimit}`
+                );
+              }}
+              maxSelected={3}
               value={authorsSelected}
-              onChange={setAuthorsSelected}
+              onChange={handleSetAuthors}
               options={authorOptions}
               placeholder="Выберите авторов"
               emptyIndicator={noResultsFound}

@@ -31,7 +31,7 @@ const BookPage: FC<Props> = async ({ params }) => {
   }
 
   return (
-      <Container className="flex flex-col gap-4 pt-14">
+      <Container className="flex flex-col gap-4 pt-14 mb-2">
         <BookContent book={book} />
       </Container>
   );

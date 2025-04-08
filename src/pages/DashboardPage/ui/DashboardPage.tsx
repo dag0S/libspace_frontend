@@ -45,9 +45,9 @@ const dashboardCardContent: IDashboardCard[] = [
 
 const DashboardPage: FC = () => {
   return (
-    <Container>
+    <Container className="mb-2">
       <h2 className="text-3xl font-semibold mb-2">Панель управления</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4 mb-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4">
         {dashboardCardContent.map((card) => (
           <DashboardCard card={card} key={card.title} />
         ))}
