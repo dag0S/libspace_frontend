@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import { IBookWithGenresAndAuthor } from "@/src/pages/BookPage/types/types";
 import { Badge } from "@/src/shared/shadcn";
-import { BorrowABook } from "@/src/features/BorrowABook";
+import { ActionWithABook } from "../../ActionWithABook";
 
 interface Props {
   book: IBookWithGenresAndAuthor;
@@ -50,7 +50,7 @@ export const BookContent: FC<Props> = ({ book }) => {
           ? "Копии закончились"
           : `Осталось копий: ${book.copies}`}
       </div>
-      <BorrowABook bookId={book.id} copies={book.copies} />
+      <ActionWithABook bookId={book.id} copies={book.copies} />
     </>
   );
 };

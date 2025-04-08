@@ -20,7 +20,7 @@ const ProfilePage: FC = async () => {
   }
 
   return (
-    <Container className="mb-2">
+    <Container className="mb-2" variant="md">
       <ProfileContent />
     </Container>
   );

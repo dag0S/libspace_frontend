@@ -89,6 +89,12 @@ export const FilterDrawer: FC<Props> = ({ children }) => {
   };
 
   const handleClearFilters = () => {
+    const params = new URLSearchParams(searchParams?.toString());
+
+    params.delete("genres");
+    params.delete("authors");
+    router.replace(`${pathname}?${params.toString()}`);
+
     setAuthorsSelected([]);
     setGenresSelected([]);
   };

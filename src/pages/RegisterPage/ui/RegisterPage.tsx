@@ -17,7 +17,7 @@ const LoginPage: FC = async () => {
 
   return (
     <div className="min-h-screen flex justify-center items-center py-3">
-      <Container className="px-5 flex flex-col gap-6 items-center">
+      <Container className="px-5 flex flex-col gap-6 items-center" variant="sm">
         <Link href="/">
           <h2 className="text-4xl font-medium">LibSpace</h2>
         </Link>

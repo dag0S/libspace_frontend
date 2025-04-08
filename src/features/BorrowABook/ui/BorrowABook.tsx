@@ -2,18 +2,15 @@
 
 import { FC, useState } from "react";
 import Link from "next/link";
-
-import { cn } from "@/src/shared/lib";
-import { Button, Spinner } from "@/src/shared/shadcn";
-import { useAppSelector } from "@/src/shared/hooks";
-import {
-  useBorrowABookMutation,
-  useCheckBookStatusQuery,
-} from "@/src/entities/Borrowing";
-import { isErrorWithMessage } from "@/src/shared/utils";
-import { MENU_LIST } from "@/src/shared/constant";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+
+import { cn } from "@/src/shared/lib";
+import { Button } from "@/src/shared/shadcn";
+import { useAppSelector } from "@/src/shared/hooks";
+import { useBorrowABookMutation } from "@/src/entities/Borrowing";
+import { isErrorWithMessage } from "@/src/shared/utils";
+import { MENU_LIST } from "@/src/shared/constant";
 
 interface Props {
   className?: string;
@@ -26,14 +23,6 @@ export const BorrowABook: FC<Props> = ({ className, bookId, copies }) => {
   const [borrowABook, { isLoading }] = useBorrowABookMutation();
   const [error, setError] = useState("");
   const router = useRouter();
-
-  const { data, isLoading: isLoadingHasBorrowed } = useCheckBookStatusQuery(
-    {
-      bookId,
-      userId: user?.id,
-    },
-    { skip: !user?.id }
-  );
 
   const handleBorrowABook = async () => {
     try {
@@ -70,27 +59,17 @@ export const BorrowABook: FC<Props> = ({ className, bookId, copies }) => {
     );
   }
 
-  if (isLoadingHasBorrowed) {
-    <Button>
-      <Spinner />
-    </Button>;
-  }
-
   return (
     <div className={cn("flex flex-col", className)}>
       {error && <div className="text-destructive">{error}</div>}
-      {data?.hasBorrowed ? (
-        <Button size="lg">Вернуть книгу</Button>
-      ) : (
-        <Button
-          size="lg"
-          disabled={copies <= 0}
-          loading={isLoading}
-          onClick={handleBorrowABook}
-        >
-          Взять в аренду
-        </Button>
-      )}
+      <Button
+        size="lg"
+        disabled={copies <= 0}
+        loading={isLoading}
+        onClick={handleBorrowABook}
+      >
+        Взять в аренду
+      </Button>
     </div>
   );
 };

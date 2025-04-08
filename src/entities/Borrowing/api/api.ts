@@ -7,6 +7,7 @@ export const borrowingsApi = baseApi.injectEndpoints({
       query: (userId) => ({
         url: `/borrowings/${userId}`,
       }),
+      providesTags: ["Borrowing"],
     }),
     borrowABook: builder.mutation<void, IBorrowData>({
       query: (borrowData) => ({
@@ -14,14 +15,23 @@ export const borrowingsApi = baseApi.injectEndpoints({
         method: "POST",
         body: borrowData,
       }),
+      invalidatesTags: ["Borrowing"],
+    }),
+    returnBook: builder.mutation<void, string>({
+      query: (borrowingId) => ({
+        url: `/borrowings/${borrowingId}`,
+        method: "PUT",
+      }),
+      invalidatesTags: ["Borrowing"],
     }),
     checkBookStatus: builder.query<
-      { hasBorrowed: boolean },
+      { hasBorrowed: boolean; borrowingId?: string },
       { bookId: string; userId?: string }
     >({
       query: ({ bookId, userId }) => ({
         url: `borrowings/check?bookId=${bookId}&userId=${userId}`,
       }),
+      providesTags: ["Borrowing"],
     }),
   }),
 });
@@ -30,4 +40,5 @@ export const {
   useGetBorrowingsByUserIdQuery,
   useBorrowABookMutation,
   useCheckBookStatusQuery,
+  useReturnBookMutation,
 } = borrowingsApi;
