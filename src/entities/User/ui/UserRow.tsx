@@ -5,6 +5,9 @@ import { cn } from "@/src/shared/lib";
 import { Button, TableCell, TableRow } from "@/src/shared/shadcn";
 import { formatDateLocalized, getRoleName } from "@/src/shared/utils";
 import { IUser } from "../types/types";
+import { DashboardDrawer } from "@/src/shared/ui";
+import { EditUser } from "@/src/features/EditUser";
+import { DeleteUser } from "@/src/features/DeleteUser";
 
 interface Props {
   className?: string;
@@ -22,16 +25,26 @@ export const UserRow: FC<Props> = ({ className, user }) => {
       <TableCell>{formatDateLocalized(user.updatedAt.toString())}</TableCell>
       <TableCell className="sticky right-0 z-10 bg-background">
         <div className="flex gap-2 justify-end">
-          <Button size="icon" title="Редактировать пользователя">
-            <Edit />
-          </Button>
-          <Button
-            size="icon"
-            variant="destructive"
-            title="Удалить пользователя"
+          <DashboardDrawer
+            title="Редактирование пользователя"
+            content={<EditUser user={user} />}
           >
-            <Trash />
-          </Button>
+            <Button size="icon" title="Редактировать пользователя">
+              <Edit />
+            </Button>
+          </DashboardDrawer>
+          <DashboardDrawer
+            title="Удаление пользователя"
+            content={<DeleteUser userId={user.id} />}
+          >
+            <Button
+              size="icon"
+              variant="destructive"
+              title="Удалить пользователя"
+            >
+              <Trash />
+            </Button>
+          </DashboardDrawer>
         </div>
       </TableCell>
     </TableRow>

@@ -6,5 +6,8 @@ export {
   useGetUsersQuery,
 } from "./api/api";
 export { UserRow } from "./ui/UserRow";
-export { createUserFormSchema } from "./const/createUserZodSchema";
-export type { UserCreationData } from "./types/types";
+export {
+  createUserFormSchema,
+  editUserFormSchema,
+} from "./const/UserZodSchemes";
+export type { UserCreationData, UserEditionData } from "./types/types";

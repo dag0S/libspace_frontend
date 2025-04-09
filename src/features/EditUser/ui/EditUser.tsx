@@ -21,42 +21,38 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/src/shared/shadcn";
-import {
-  createUserFormSchema,
-  useCreateUserMutation,
-  UserCreationData,
-} from "@/src/entities/User";
+import { editUserFormSchema, useEditUserMutation } from "@/src/entities/User";
 import { getRoleName, isErrorWithMessage } from "@/src/shared/utils";
+import { IUser, UserEditionData } from "@/src/entities/User/types/types";
 
 interface Props {
   className?: string;
+  user: IUser;
 }
 
-export const CreateUser: FC<Props> = ({ className }) => {
-  const [createUser, { isLoading }] = useCreateUserMutation();
+export const EditUser: FC<Props> = ({ className, user }) => {
+  const [editUser, { isLoading }] = useEditUserMutation();
   const [error, setError] = useState("");
-  const form = useForm<UserCreationData>({
-    resolver: zodResolver(createUserFormSchema),
+  const form = useForm<UserEditionData>({
+    resolver: zodResolver(editUserFormSchema),
     defaultValues: {
-      email: "",
-      password: "",
-      confirmPassword: "",
-      firstName: "",
-      lastName: "",
-      role: "READER",
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: user.role,
     },
   });
 
-  const onSubmit = async (values: UserCreationData) => {
+  const onSubmit = async (values: UserEditionData) => {
     try {
       setError("");
 
       if (!isLoading) {
-        await createUser(values).unwrap();
+        await editUser({ userId: user.id, data: values }).unwrap();
       }
 
       form.reset();
-      toast.success("Вы успешно создали нового пользователя");
+      toast.success("Вы успешно изменили данные пользователя");
     } catch (err) {
       const mayBeError = isErrorWithMessage(err);
 
@@ -66,7 +62,7 @@ export const CreateUser: FC<Props> = ({ className }) => {
         setError("Неизвестная ошибка");
       }
 
-      toast.error("Не удалось создать пользователя");
+      toast.error("Не удалось изменить данные пользователя");
     }
   };
 
@@ -147,43 +143,13 @@ export const CreateUser: FC<Props> = ({ className }) => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel className="mb-2">Пароль</FormLabel>
-                <FormControl>
-                  <Input type="password" placeholder="Пароль" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="confirmPassword"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel className="mb-2">Подтверждение пароля</FormLabel>
-                <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Подтверждение пароля"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <Button
             type="submit"
             className="w-full"
             size="lg"
             disabled={isLoading}
           >
-            Создать пользователя
+            Отправить
           </Button>
           {error && <div className="text-destructive">{error}</div>}
         </form>

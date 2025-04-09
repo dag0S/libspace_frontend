@@ -2,10 +2,10 @@ import { Metadata } from "next";
 import { FC } from "react";
 import { PlusCircle } from "lucide-react";
 
-import { Container } from "@/src/shared/ui";
+import { Container, DashboardDrawer } from "@/src/shared/ui";
 import { DashboardUsersList } from "@/src/widgets/DashboardUsersList";
 import { Button } from "@/src/shared/shadcn";
-import { CreationUserDrawer } from "@/src/widgets/CreationUserDrawer";
+import { CreateUser } from "@/src/features/CreateUser";
 
 export const metadata: Metadata = {
   title: "Lib Space | Панель управления | Пользователи",
@@ -15,13 +15,15 @@ export const metadata: Metadata = {
 const DashboardUsersPage: FC = () => {
   return (
     <Container>
-      <h2 className="text-3xl font-semibold mb-3">Пользователи</h2>
-      <CreationUserDrawer>
-        <Button className="mb-3">
-          <PlusCircle />
-          <div>Создать пользователя</div>
-        </Button>
-      </CreationUserDrawer>
+      <div className="flex justify-between items-center gap-2 mb-4">
+        <h2 className="text-3xl font-semibold">Пользователи</h2>
+        <DashboardDrawer title="Создание пользователя" content={<CreateUser />}>
+          <Button>
+            <PlusCircle />
+            <div>Создать пользователя</div>
+          </Button>
+        </DashboardDrawer>
+      </div>
       <DashboardUsersList />
     </Container>
   );
