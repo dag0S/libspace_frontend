@@ -1,9 +1,10 @@
 import { Role } from "@/src/shared/types";
 import { ReactNode } from "react";
 
-export interface IMenuItem {
+export interface IDashboardCard {
   title: string;
+  description: string;
   href: string;
-  icon: ReactNode;
+  icon?: ReactNode;
   role: Role[];
 }

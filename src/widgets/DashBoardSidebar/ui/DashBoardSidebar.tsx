@@ -42,41 +42,49 @@ const menuItems: IMenuItem[] = [
     title: "Главная страница сайта",
     href: MENU_LIST.main,
     icon: <House />,
+    role: ["ADMIN", "LIBRARIAN"],
   },
   {
     title: "Панель управления",
     href: MENU_LIST.dashboard,
     icon: <ChartPie />,
+    role: ["ADMIN", "LIBRARIAN"],
   },
   {
     title: "Книги",
     href: MENU_LIST.dashboard_books,
     icon: <LibraryBig />,
+    role: ["ADMIN", "LIBRARIAN"],
   },
   {
     title: "Пользователи",
     href: MENU_LIST.dashboard_users,
     icon: <Users />,
+    role: ["ADMIN", "LIBRARIAN"],
   },
   {
     title: "Книги, взятые в аренду",
     href: MENU_LIST.dashboard_borrowings,
     icon: <Ticket />,
+    role: ["ADMIN", "LIBRARIAN"],
   },
   {
     title: "Авторы",
     href: MENU_LIST.dashboard_authors,
     icon: <UserPen />,
+    role: ["ADMIN", "LIBRARIAN"],
   },
   {
     title: "Жанры",
     href: MENU_LIST.dashboard_genres,
     icon: <BookCopy />,
+    role: ["ADMIN", "LIBRARIAN"],
   },
   {
     title: "Логи",
     href: MENU_LIST.dashboard_logs,
     icon: <ScrollText />,
+    role: ["ADMIN"],
   },
 ];
 
@@ -102,16 +110,24 @@ export const DashBoardSidebar: FC<Props> = ({ user }) => {
           <SidebarGroupLabel>Панель управления</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {menuItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={pathname === item.href}>
-                    <Link href={item.href} className="flex items-center gap-2">
-                      {item.icon}
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {menuItems.map((item) =>
+                item.role.includes(user.role) ? (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={pathname === item.href}
+                    >
+                      <Link
+                        href={item.href}
+                        className="flex items-center gap-2"
+                      >
+                        {item.icon}
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ) : null
+              )}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
