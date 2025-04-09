@@ -3,7 +3,6 @@
 import { FC } from "react";
 
 import { cn } from "@/src/shared/lib";
-import { useGetUsersQuery, UserRow } from "@/src/entities/User";
 import {
   Table,
   TableBody,
@@ -12,13 +11,14 @@ import {
   TableRow,
 } from "@/src/shared/shadcn";
 import { DashboardListSkeleton } from "@/src/shared/ui";
+import { AuthorRow, useGetAuthorsQuery } from "@/src/entities/Author";
 
 interface Props {
   className?: string;
 }
 
-export const DashboardUsersList: FC<Props> = ({ className }) => {
-  const { data, isLoading } = useGetUsersQuery();
+export const DashboardAuthorsList: FC<Props> = ({ className }) => {
+  const { data, isLoading } = useGetAuthorsQuery();
 
   if (isLoading) {
     return <DashboardListSkeleton />;
@@ -29,10 +29,7 @@ export const DashboardUsersList: FC<Props> = ({ className }) => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Фамилия</TableHead>
-            <TableHead>Имя</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Роль</TableHead>
+            <TableHead>Наименование</TableHead>
             <TableHead>Время создания</TableHead>
             <TableHead>Время обновления</TableHead>
             <TableHead className="sticky right-0 z-10 text-right bg-background w-[100px]">
@@ -41,7 +38,8 @@ export const DashboardUsersList: FC<Props> = ({ className }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data && data.map((user) => <UserRow user={user} key={user.id} />)}
+          {data &&
+            data.map((author) => <AuthorRow author={author} key={author.id} />)}
         </TableBody>
       </Table>
     </div>

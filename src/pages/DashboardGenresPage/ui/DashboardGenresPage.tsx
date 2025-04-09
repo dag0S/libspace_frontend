@@ -1,7 +1,11 @@
 import { Metadata } from "next";
 import { FC } from "react";
+import { PlusCircle } from "lucide-react";
 
-import { Container } from "@/src/shared/ui";
+import { Container, DashboardDrawer } from "@/src/shared/ui";
+import { Button } from "@/src/shared/shadcn";
+import { DashboardGenresList } from "@/src/widgets/DashboardGenresList";
+import { CreateGenre } from "@/src/features/CreateGenre";
 
 export const metadata: Metadata = {
   title: "Lib Space | Панель управления | Жанры",
@@ -11,7 +15,19 @@ export const metadata: Metadata = {
 const DashboardGenresPage: FC = () => {
   return (
     <Container>
-      <h2 className="text-3xl font-semibold mb-2">Жанры</h2>
+      <div className="flex justify-between items-center gap-2 mb-4">
+        <h2 className="text-3xl font-semibold">Жанры</h2>
+        <DashboardDrawer
+          title="Добавление нового жанра"
+          content={<CreateGenre />}
+        >
+          <Button>
+            <PlusCircle />
+            <div>Добавить жанр</div>
+          </Button>
+        </DashboardDrawer>
+      </div>
+      <DashboardGenresList />
     </Container>
   );
 };

@@ -3,7 +3,6 @@
 import { FC } from "react";
 
 import { cn } from "@/src/shared/lib";
-import { useGetUsersQuery, UserRow } from "@/src/entities/User";
 import {
   Table,
   TableBody,
@@ -12,13 +11,14 @@ import {
   TableRow,
 } from "@/src/shared/shadcn";
 import { DashboardListSkeleton } from "@/src/shared/ui";
+import { GenreRow, useGetGenresQuery } from "@/src/entities/Genre";
 
 interface Props {
   className?: string;
 }
 
-export const DashboardUsersList: FC<Props> = ({ className }) => {
-  const { data, isLoading } = useGetUsersQuery();
+export const DashboardGenresList: FC<Props> = ({ className }) => {
+  const { data, isLoading } = useGetGenresQuery();
 
   if (isLoading) {
     return <DashboardListSkeleton />;
@@ -29,10 +29,7 @@ export const DashboardUsersList: FC<Props> = ({ className }) => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Фамилия</TableHead>
-            <TableHead>Имя</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Роль</TableHead>
+            <TableHead>Название</TableHead>
             <TableHead>Время создания</TableHead>
             <TableHead>Время обновления</TableHead>
             <TableHead className="sticky right-0 z-10 text-right bg-background w-[100px]">
@@ -41,7 +38,8 @@ export const DashboardUsersList: FC<Props> = ({ className }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data && data.map((user) => <UserRow user={user} key={user.id} />)}
+          {data &&
+            data.map((genre) => <GenreRow key={genre.id} genre={genre} />)}
         </TableBody>
       </Table>
     </div>

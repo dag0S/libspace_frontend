@@ -1,7 +1,11 @@
 import { Metadata } from "next";
 import { FC } from "react";
+import { PlusCircle } from "lucide-react";
 
-import { Container } from "@/src/shared/ui";
+import { Container, DashboardDrawer } from "@/src/shared/ui";
+import { Button } from "@/src/shared/shadcn";
+import { DashboardAuthorsList } from "@/src/widgets/DashboardAuthorsList";
+import { CreateAuthor } from "@/src/features/CreateAuthor";
 
 export const metadata: Metadata = {
   title: "Lib Space | Панель управления | Авторы",
@@ -11,7 +15,19 @@ export const metadata: Metadata = {
 const DashboardAuthorsPage: FC = () => {
   return (
     <Container>
-      <h2 className="text-3xl font-semibold mb-2">Авторы</h2>
+      <div className="flex justify-between items-center gap-2 mb-4">
+        <h2 className="text-3xl font-semibold">Авторы</h2>
+        <DashboardDrawer
+          title="Добавление нового жанра"
+          content={<CreateAuthor />}
+        >
+          <Button>
+            <PlusCircle />
+            <div>Добавить автора</div>
+          </Button>
+        </DashboardDrawer>
+      </div>
+      <DashboardAuthorsList />
     </Container>
   );
 };

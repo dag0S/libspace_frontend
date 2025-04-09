@@ -55,7 +55,7 @@ export const Header: FC<Props> = ({
 
   return (
     <header
-      className={cn("border-b py-2 sticky top-0 z-10 bg-background", className)}
+      className={cn("border-b py-2 sticky top-0 z-30 bg-background", className)}
     >
       <Container className="flex flex-col gap-2">
         <div className="flex items-center justify-between gap-2">

@@ -7,7 +7,7 @@ interface Props {
   className?: string;
 }
 
-export const DashboardUsersListSkeleton: FC<Props> = ({ className }) => {
+export const DashboardListSkeleton: FC<Props> = ({ className }) => {
   return (
     <div className={cn("flex flex-col gap-3", className)}>
       {[
