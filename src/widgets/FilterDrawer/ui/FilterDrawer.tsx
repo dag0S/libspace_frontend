@@ -18,9 +18,9 @@ import {
 import { authorToOption, genreToOption } from "@/src/shared/utils";
 import { useGetGenresQuery } from "@/src/entities/Genre";
 import { useGetAuthorsQuery } from "@/src/entities/Author";
+import { Container } from "@/src/shared/ui";
 
 interface Props {
-  className?: string;
   children: ReactNode;
 }
 
@@ -109,17 +109,19 @@ export const FilterDrawer: FC<Props> = ({ children }) => {
     <Drawer>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="h-5/6">
-        <DrawerHeader>
-          <div className="flex justify-between items-center gap-2">
-            <DrawerTitle className="mb-2 text-xl">Фильтрация</DrawerTitle>
-            <Button
-              variant="destructive"
-              size="sm"
-              onClick={handleClearFilters}
-            >
-              Сбросить
-            </Button>
-          </div>
+        <Container variant='sm'>
+          <DrawerHeader>
+            <div className="flex justify-between items-center gap-2">
+              <DrawerTitle className="mb-2 text-xl">Фильтрация</DrawerTitle>
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={handleClearFilters}
+              >
+                Сбросить
+              </Button>
+            </div>
+          </DrawerHeader>
           <div className="flex flex-col gap-2">
             <MultipleSelector
               maxSelected={3}
@@ -148,7 +150,7 @@ export const FilterDrawer: FC<Props> = ({ children }) => {
               emptyIndicator={noResultsFound}
             />
           </div>
-        </DrawerHeader>
+        </Container>
       </DrawerContent>
     </Drawer>
   );
