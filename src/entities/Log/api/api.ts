@@ -1,13 +1,22 @@
 import { baseApi } from "@/src/shared/api";
+import { ILog } from "../types/types";
 
-export const authorsApi = baseApi.injectEndpoints({
+export const logsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAuthors: builder.query<string[], void>({
-      query: () => ({
-        url: "/authors",
+    getLogsById: builder.query<ILog[], string>({
+      query: (userId) => ({
+        url: `/logs/${userId}`,
       }),
+      providesTags: ["Log"],
+    }),
+    deleteLog: builder.mutation<void, string>({
+      query: (logId) => ({
+        url: `/logs/${logId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Log"],
     }),
   }),
 });
 
-export const { useGetAuthorsQuery } = authorsApi;
+export const { useDeleteLogMutation, useGetLogsByIdQuery } = logsApi;

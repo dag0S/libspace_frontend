@@ -1,9 +1,9 @@
 "use client";
 
 import { FC } from "react";
+import { useParams, useRouter } from "next/navigation";
 
 import { cn } from "@/src/shared/lib";
-import { useGetUsersQuery, UserRow } from "@/src/entities/User";
 import {
   Table,
   TableBody,
@@ -12,17 +12,24 @@ import {
   TableRow,
 } from "@/src/shared/shadcn";
 import { DashboardListSkeleton } from "@/src/shared/ui";
+import { LogRow, useGetLogsByIdQuery } from "@/src/entities/Log";
+import { MENU_LIST } from "@/src/shared/constant";
 
 interface Props {
   className?: string;
-  hasLog?: boolean;
 }
 
-export const DashboardUsersList: FC<Props> = ({ className, hasLog = false }) => {
-  const { data, isLoading } = useGetUsersQuery();
+export const DashboardUserLogList: FC<Props> = ({ className }) => {
+  const params = useParams<{ userId: string }>();
+  const router = useRouter();
+  const { data, isLoading } = useGetLogsByIdQuery(params?.userId || "");
 
   if (isLoading) {
     return <DashboardListSkeleton />;
+  }
+
+  if (!data) {
+    router.push(MENU_LIST.not_found);
   }
 
   return (
@@ -30,19 +37,16 @@ export const DashboardUsersList: FC<Props> = ({ className, hasLog = false }) => 
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Фамилия</TableHead>
-            <TableHead>Имя</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Роль</TableHead>
-            <TableHead>Время создания</TableHead>
-            <TableHead>Время обновления</TableHead>
+            <TableHead>HTTP метод</TableHead>
+            <TableHead>Описание</TableHead>
+            <TableHead>Время</TableHead>
             <TableHead className="sticky right-0 z-10 text-right bg-background w-[100px]">
               Действия
             </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data && data.map((user) => <UserRow user={user} key={user.id} hasLog={hasLog} />)}
+          {data && data.map((log) => <LogRow log={log} key={log.id} />)}
         </TableBody>
       </Table>
     </div>

@@ -1,12 +1,12 @@
 "use client";
 
 import { FC, ReactNode, useEffect, useRef, useState } from "react";
-import { ArrowLeft, Grid3x3, SearchIcon, X } from "lucide-react";
+import { Grid3x3, SearchIcon, X } from "lucide-react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 import { cn } from "@/src/shared/lib";
-import { Container } from "@/src/shared/ui";
+import { ButtonGoBack, Container } from "@/src/shared/ui";
 import { Button } from "@/src/shared/shadcn";
 import { SwitchTheme } from "@/src/features/SwitchTheme";
 import { MENU_LIST } from "@/src/shared/constant";
@@ -30,7 +30,6 @@ export const Header: FC<Props> = ({
   hasGrid = true,
   sidebarTrigger,
 }) => {
-  const router = useRouter();
   const [showSearch, setShowSearch] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchParams = useSearchParams();
@@ -61,11 +60,7 @@ export const Header: FC<Props> = ({
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             {sidebarTrigger}
-            {hasGoBack && (
-              <Button onClick={() => router.back()} size="icon" variant="ghost">
-                <ArrowLeft />
-              </Button>
-            )}
+            {hasGoBack && <ButtonGoBack />}
             <Link href={MENU_LIST.main} className="text-2xl font-bold">
               LibSpace
             </Link>

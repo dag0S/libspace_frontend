@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { FC } from "react";
 
 import { Container } from "@/src/shared/ui";
+import { DashboardUsersList } from "@/src/widgets/DashboardUsersList";
 
 export const metadata: Metadata = {
   title: "Lib Space | Панель управления | Логи",
@@ -11,7 +12,8 @@ export const metadata: Metadata = {
 const DashboardLogsPage: FC = () => {
   return (
     <Container>
-      <h2 className="text-3xl font-semibold mb-2">Логи</h2>
+      <h2 className="text-3xl font-semibold mb-4">Логи</h2>
+      <DashboardUsersList hasLog />
     </Container>
   );
 };
