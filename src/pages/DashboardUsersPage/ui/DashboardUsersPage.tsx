@@ -24,7 +24,7 @@ const DashboardUsersPage: FC = () => {
           </Button>
         </DashboardDrawer>
       </div>
-      <DashboardUsersList />
+      <DashboardUsersList hasEditAndDelete />
     </Container>
   );
 };

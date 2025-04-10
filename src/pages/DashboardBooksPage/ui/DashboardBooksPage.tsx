@@ -1,7 +1,11 @@
 import { Metadata } from "next";
 import { FC } from "react";
+import { PlusCircle } from "lucide-react";
 
-import { Container } from "@/src/shared/ui";
+import { Container, DashboardDrawer } from "@/src/shared/ui";
+import { DashboardBooksList } from "@/src/widgets/DashboardBooksList";
+import { Button } from "@/src/shared/shadcn";
+import { CreateBook } from "@/src/features/CreateBook";
 
 export const metadata: Metadata = {
   title: "Lib Space | Панель управления | Книги",
@@ -11,7 +15,16 @@ export const metadata: Metadata = {
 const DashboardBooksPage: FC = () => {
   return (
     <Container>
-      <h2 className="text-3xl font-semibold mb-2">Книги</h2>
+      <div className="flex justify-between items-center gap-2 mb-4">
+        <h2 className="text-3xl font-semibold">Книги</h2>
+        <DashboardDrawer title="Создание книгу" content={<CreateBook />}>
+          <Button>
+            <PlusCircle />
+            <div>Создать книгу</div>
+          </Button>
+        </DashboardDrawer>
+      </div>
+      <DashboardBooksList />
     </Container>
   );
 };

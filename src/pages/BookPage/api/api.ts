@@ -1,4 +1,4 @@
-import { IBookWithGenresAndAuthor } from "../types/types";
+import { IBookWithGenresAndAuthor } from "@/src/entities/Book";
 
 export const fetchBookById = async (
   bookId: string

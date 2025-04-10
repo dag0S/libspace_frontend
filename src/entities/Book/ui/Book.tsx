@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import { cn } from "@/src/shared/lib";
 import { AspectRatio } from "@/src/shared/shadcn";
-import { IBook } from "../types/IBook";
+import { IBook } from "../types/types";
 import Link from "next/link";
 
 interface Props {

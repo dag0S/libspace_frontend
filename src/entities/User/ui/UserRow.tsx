@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Edit, ScrollText, Trash } from "lucide-react";
+import { Edit, ScrollText, Ticket, Trash } from "lucide-react";
 
 import { cn } from "@/src/shared/lib";
 import { Button, TableCell, TableRow } from "@/src/shared/shadcn";
@@ -14,10 +14,18 @@ import { MENU_LIST } from "@/src/shared/constant";
 interface Props {
   className?: string;
   hasLog: boolean;
+  hasBorrowing: boolean;
+  hasEditAndDelete: boolean;
   user: IUser;
 }
 
-export const UserRow: FC<Props> = ({ className, user, hasLog }) => {
+export const UserRow: FC<Props> = ({
+  className,
+  user,
+  hasEditAndDelete,
+  hasLog,
+  hasBorrowing,
+}) => {
   return (
     <TableRow className={cn("", className)}>
       <TableCell>{user.lastName}</TableCell>
@@ -28,13 +36,21 @@ export const UserRow: FC<Props> = ({ className, user, hasLog }) => {
       <TableCell>{formatDateLocalized(user.updatedAt.toString())}</TableCell>
       <TableCell className="sticky right-0 z-10 bg-background">
         <div className="flex gap-2 justify-end">
-          {hasLog ? (
+          {hasBorrowing && (
+            <Link href={`${MENU_LIST.dashboard_borrowings}/${user.id}`}>
+              <Button size="icon" title="Промотреть книги, взятые в аренду">
+                <Ticket />
+              </Button>
+            </Link>
+          )}
+          {hasLog && (
             <Link href={`${MENU_LIST.dashboard_logs}/${user.id}`}>
               <Button size="icon" title="Промотреть логи пользователя">
                 <ScrollText />
               </Button>
             </Link>
-          ) : (
+          )}
+          {hasEditAndDelete && (
             <>
               <DashboardDrawer
                 title="Редактирование пользователя"
