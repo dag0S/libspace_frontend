@@ -24,6 +24,13 @@ export const borrowingsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Borrowing"],
     }),
+    removeBorrowing: builder.mutation<void, string>({
+      query: (borrowingId) => ({
+        url: `/borrowings/${borrowingId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Borrowing"],
+    }),
     checkBookStatus: builder.query<
       { hasBorrowed: boolean; borrowingId?: string },
       { bookId: string; userId?: string }
@@ -41,4 +48,5 @@ export const {
   useBorrowABookMutation,
   useCheckBookStatusQuery,
   useReturnBookMutation,
+  useRemoveBorrowingMutation,
 } = borrowingsApi;

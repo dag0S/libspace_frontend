@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { FC } from "react";
 
 import { ButtonGoBack, Container } from "@/src/shared/ui";
-import { DashboardUserLogList } from "@/src/widgets/DashboardUserLogList";
+import { DashboardUserBorrowingsList } from "@/src/widgets/DashboardUserBorrowingsList";
 
 export const metadata: Metadata = {
   title: "Lib Space | Панель управления | Книги, взятые в аренду",
@@ -16,7 +16,7 @@ const DashboardUserBorrowingsPage: FC = () => {
         <ButtonGoBack />
         <h2 className="text-3xl font-semibold">Книги, взятые в аренду</h2>
       </div>
-      <DashboardUserLogList />
+      <DashboardUserBorrowingsList />
     </Container>
   );
 };
