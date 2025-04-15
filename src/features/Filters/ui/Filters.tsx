@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import { FC, Suspense } from "react";
 import { BadgeAlert, Heart, ListFilter } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -41,12 +41,14 @@ export const Filters: FC<Props> = ({ className }) => {
         <BadgeAlert />
         <div>Последние</div>
       </Button>
-      <FilterDrawer>
-        <Button variant="outline">
-          <ListFilter />
-          <div>Фильтрация</div>
-        </Button>
-      </FilterDrawer>
+      <Suspense>
+        <FilterDrawer>
+          <Button variant="outline">
+            <ListFilter />
+            <div>Фильтрация</div>
+          </Button>
+        </FilterDrawer>
+      </Suspense>
     </div>
   );
 };

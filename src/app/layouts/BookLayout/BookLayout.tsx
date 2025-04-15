@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 import { Header } from "@/src/widgets/Header";
 
@@ -14,13 +15,15 @@ export default function BookLayout({
 }>) {
   return (
     <>
-      <Header
-        className="mb-2"
-        hasFilters={false}
-        hasSearch={false}
-        hasGrid={false}
-        hasGoBack
-      />
+      <Suspense>
+        <Header
+          className="mb-2"
+          hasFilters={false}
+          hasSearch={false}
+          hasGrid={false}
+          hasGoBack
+        />
+      </Suspense>
       <main className="flex-1 flex">{children}</main>
     </>
   );

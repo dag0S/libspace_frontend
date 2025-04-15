@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 import { Header } from "@/src/widgets/Header";
 import { SidebarProvider, SidebarTrigger } from "@/src/shared/shadcn";
@@ -34,13 +35,15 @@ export default async function DashboardLayout({
     <SidebarProvider>
       <DashBoardSidebar user={user} />
       <div className="flex flex-col w-full">
-        <Header
-          className="mb-2"
-          hasFilters={false}
-          hasGrid={false}
-          hasSearch={false}
-          sidebarTrigger={<SidebarTrigger />}
-        />
+        <Suspense>
+          <Header
+            className="mb-2"
+            hasFilters={false}
+            hasGrid={false}
+            hasSearch={false}
+            sidebarTrigger={<SidebarTrigger />}
+          />
+        </Suspense>
         <main className="flex-1 flex">{children}</main>
       </div>
     </SidebarProvider>

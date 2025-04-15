@@ -2,9 +2,9 @@ import { FC } from "react";
 import { Eye } from "lucide-react";
 import Image from "next/image";
 
-import { IBookWithGenresAndAuthor } from "@/src/pages/BookPage/types/types";
 import { Badge } from "@/src/shared/shadcn";
 import { ActionWithABook } from "../../ActionWithABook";
+import { IBookWithGenresAndAuthor } from "@/src/entities/Book";
 
 interface Props {
   book: IBookWithGenresAndAuthor;

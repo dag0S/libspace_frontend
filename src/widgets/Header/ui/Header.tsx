@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, ReactNode, useEffect, useRef, useState } from "react";
+import { FC, ReactNode, Suspense, useEffect, useRef, useState } from "react";
 import { Grid3x3, SearchIcon, X } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -83,8 +83,16 @@ export const Header: FC<Props> = ({
             <SwitchTheme />
           </div>
         </div>
-        {showSearch && hasSearch && <Search ref={searchInputRef} />}
-        {hasFilters && <Filters />}
+        {showSearch && hasSearch && (
+          <Suspense>
+            <Search ref={searchInputRef} />
+          </Suspense>
+        )}
+        {hasFilters && (
+          <Suspense>
+            <Filters />
+          </Suspense>
+        )}
       </Container>
     </header>
   );

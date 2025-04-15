@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 import { Header } from "@/src/widgets/Header";
 import { Menu } from "@/src/widgets/Menu";
@@ -15,7 +16,9 @@ export default function MainLayout({
 }>) {
   return (
     <>
-      <Header className="mb-2" />
+      <Suspense>
+        <Header className="mb-2" />
+      </Suspense>
       <main className="flex-1 flex">{children}</main>
       <Menu />
     </>
