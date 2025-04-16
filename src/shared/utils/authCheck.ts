@@ -13,7 +13,7 @@ export const authCheck = async () => {
     return { isAuthenticated: false, user: null };
   }
 
-  const res = await fetch(`${process.env.NEXT_SSR_API_URL}/auth/me`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
     headers: {
       cookie: `${JWT_ACCESS_TOKEN}=${token}`,
     },

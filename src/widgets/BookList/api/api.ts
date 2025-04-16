@@ -8,7 +8,7 @@ export const fetchBooks = async (
     const { searchBy, sortBy, authors, genres } = queryParams;
 
     const res = await fetch(
-      `${process.env.NEXT_SSR_API_URL}/books?searchBy=${searchBy}&sortBy=${sortBy}&authors=${authors}&genres=${genres}`
+      `${process.env.NEXT_PUBLIC_API_URL}/books?searchBy=${searchBy}&sortBy=${sortBy}&authors=${authors}&genres=${genres}`
     );
 
     if (!res.ok) {
