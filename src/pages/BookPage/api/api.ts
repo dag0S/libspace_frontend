@@ -4,7 +4,7 @@ export const fetchBookById = async (
   bookId: string
 ): Promise<IBookWithGenresAndAuthor | null> => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/books/${bookId}`,
+    `${process.env.NEXT_SSR_API_URL}/books/${bookId}`,
     {
       cache: "force-cache",
       next: {
