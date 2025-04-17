@@ -15,7 +15,7 @@ export const authCheck = async () => {
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
     headers: {
-      cookie: `${JWT_ACCESS_TOKEN}=${token}`,
+      Cookie: `${JWT_ACCESS_TOKEN}=${token}`,
     },
     cache: "no-store",
   });
