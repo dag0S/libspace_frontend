@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "api.libspace-gosudarev.ru",
+        hostname: process.env.NEXT_PUBLIC_DOMAIN as string,
       },
     ],
   },

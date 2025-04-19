@@ -6,8 +6,8 @@ import { JWT_ACCESS_TOKEN } from "../constant";
 import { ResponseUserDate } from "@/src/features/Auth";
 
 export const authCheck = async () => {
-  const cookieStore = cookies();
-  const token = (await cookieStore).get("access_token")?.value;
+  const cookieStore = await cookies();
+  const token = cookieStore.get(JWT_ACCESS_TOKEN)?.value;
 
   if (!token) {
     return { isAuthenticated: false, user: null };
@@ -18,6 +18,7 @@ export const authCheck = async () => {
       Cookie: `${JWT_ACCESS_TOKEN}=${token}`,
     },
     cache: "no-store",
+    credentials: "include",
   });
 
   if (res.status === 401) {
@@ -25,6 +26,6 @@ export const authCheck = async () => {
   }
 
   const user: ResponseUserDate = await res.json();
-  
+
   return { isAuthenticated: true, user };
 };
